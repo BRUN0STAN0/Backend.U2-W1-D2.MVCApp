@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MVCApp.Models.Dipendente>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateEmployee")
+</p>
+<table class="table">
+    <tr>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cognome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stipendio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Coniugato)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+     
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cognome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stipendio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Coniugato)
+        </td>
+        <td>
+            @Html.ActionLink("Modifica", "EditEmployee", new {  id=item.IDDipendente }) |
+            @Html.ActionLink("Cancella", "DeleteEmployee", new {  id=item.IDDipendente },new { onclick="return confirm('Sicuro di cancellare il dipendente?')"})
+        </td>
+    </tr>
+}
+
+</table>
