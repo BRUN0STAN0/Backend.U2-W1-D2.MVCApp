@@ -43,8 +43,9 @@
             @Html.DisplayFor(modelItem => item.Coniugato)
         </td>
         <td>
-            @Html.ActionLink("Modifica", "EditEmployee", new {  id=item.IDDipendente }) |
-            @Html.ActionLink("Cancella", "DeleteEmployee", new {  id=item.IDDipendente },new { onclick="return confirm('Sicuro di cancellare il dipendente?')"})
+            @Html.ActionLink("Modifica", "EditEmployee", new { id = item.IDDipendente }) |
+            @*@Html.ActionLink("Cancella", "DeleteEmployee", new {  id=item.IDDipendente },new { onclick="return confirm('Sicuro di cancellare il dipendente?')"})*@
+            @Html.ActionLink("Cancella", "DeleteEmployee", new { id = item.IDDipendente })
         </td>
     </tr>
 }

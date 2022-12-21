@@ -154,8 +154,68 @@ namespace MVCApp.Controllers
 
         // Eliminazione dipendente 
 
+        //public ActionResult DeleteEmployee(int id) // in modalità GET
+        //{
+        //    SqlConnection con = new SqlConnection();
+        //    try
+        //    {
+        //        con.ConnectionString = ConfigurationManager.ConnectionStrings["ConToDipendentiDB"].ToString();
+        //        con.Open();
+
+        //        SqlCommand command = new SqlCommand();
+        //        command.Parameters.AddWithValue("@ID", id);
+
+        //        command.CommandText = "DELETE FROM DipendenteTab WHERE IDDipendente = @ID";
+        //        command.Connection= con;
+
+        //        command.ExecuteNonQuery();
+
+        //    }
+        //    catch(Exception ex) 
+        //    {
+        //        con.Close();
+        //    }
+
+        //    con.Close();
+        //    return RedirectToAction("Index");
+        //}
+
+        [HttpGet]
         public ActionResult DeleteEmployee(int id)
         {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["ConToDipendentiDB"].ToString();
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            cmd.CommandText = "SELECT Nome, Cognome FROM DipendenteTab WHERE IDDipendente = @ID";
+            cmd.Connection = con;
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            Dipendente d = new Dipendente();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    d.IDDipendente = id;
+                    d.Nome = reader["Nome"].ToString();
+                    d.Cognome = reader["Cognome"].ToString();
+                }
+            }
+
+            con.Close();
+            return View(d);
+        }
+
+        [HttpPost]
+        [ActionName("DeleteEmployee")]
+        public ActionResult ConfirmDeleteEmployee(int IDDipendente, string Nome, string Cognome)
+        {
+
+            // AZIONI PER LA CANCELLAZIONE DAL DB
+
             SqlConnection con = new SqlConnection();
             try
             {
@@ -163,20 +223,22 @@ namespace MVCApp.Controllers
                 con.Open();
 
                 SqlCommand command = new SqlCommand();
-                command.Parameters.AddWithValue("@ID", id);
+                command.Parameters.AddWithValue("@ID", IDDipendente);
 
                 command.CommandText = "DELETE FROM DipendenteTab WHERE IDDipendente = @ID";
-                command.Connection= con;
+                command.Connection = con;
 
                 command.ExecuteNonQuery();
 
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 con.Close();
             }
 
             con.Close();
+
+
             return RedirectToAction("Index");
         }
 

@@ -1,0 +1,21 @@
+﻿@model MVCApp.Models.Dipendente
+
+@{
+    ViewBag.Title = "DeleteEmployee";
+}
+
+
+<h2>Eliminazione Dipendente</h2>
+
+<p>Sicuro di voler cancellare il dipendente @Model.Nome @Model.Cognome ?</p>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.IDDipendente)
+    @Html.HiddenFor(model => model.Nome)
+    
+    <input type="hidden" value="@Model.Cognome" name="Cognome"/>        // --> STESSA COSA CHE IL CAMPO HTML.HIDDENFOR
+    <input type="submit" value="Conferma" class="btn btn-danger" />
+}
+
+
